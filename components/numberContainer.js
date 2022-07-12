@@ -27,3 +27,4 @@ const styles = StyleSheet.create ({
         fontSize: 22,
     }
 })
+export default numberContainer

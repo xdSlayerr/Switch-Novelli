@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import React from "react";
 
@@ -7,7 +7,6 @@ const Card = props => (
         {props.children}
     </View>
 )
-
 
 const styles = StyleSheet.create ({
     inputCard: {

@@ -5,6 +5,7 @@ import Card from '../components/card';
 import Colors from '../constants/colors'
 import Input from '../components/input'
 import {Keyboard} from 'react-native';
+import numberContainer from '../components/numberContainer';
 
 const StartScreen = () => {
 
@@ -26,11 +27,26 @@ const StartScreen = () => {
           setSelectedNumber(parseInt(enteredValue))
           setEnteredValue('')
     }
-
+    const confirmedOutput = confirmed ? <Text>Number: {selectedNumber}</Text> : null
+/*
+    if (confirmed) {
+      confirmedOutput = (
+        <Card style = {styles.summaryContainer}>
+          <Text>
+            Your Selection:
+          </Text>
+          <numberContainer>{selectedNumber}</numberContainer>
+          <Button title = "Start!"/>
+        </Card>
+      )
+    }
+*/
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style = {styles.screen}>
                 <Text style = {styles.title}> Game Star</Text>
+                <Card style = {styles.inputContainer}/>
+                {confirmedOutput}
                 <View style = {styles.inputContainer}>
                   <Text>Pick a number</Text>
                   <Input    
@@ -44,15 +60,14 @@ const StartScreen = () => {
                     onChangeText = {handlerInputNumber}
                   />
                   <View style = {styles.buttonContainer}>
-                    <Button title = 'Clean' onPress={() => {}} color = {Colors.accent}/>
-                    <Button title = 'Confirm' onPress={() => {}} color = {Colors.primary}/>
+                    <Button title = 'Clean' onPress={ onHandlerResetInput }  color = {Colors.accent}/>
+                    <Button title = 'Confirm' onPress={ onHandlerConfirmInput } color = {Colors.primary}/>
                   </View>
                 </View>
             </View>
         </TouchableWithoutFeedback>
-
-
     )
+    
 }
 
 const styles = StyleSheet.create ({
@@ -69,7 +84,8 @@ const styles = StyleSheet.create ({
     width: 300,
     maxWidth: '80%',
     borderWidth: 1,
-    borderColor: 'black'
+    borderColor: 'black',
+    alignItems: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
