@@ -5,7 +5,7 @@ import Card from '../components/card';
 import { NumberContainer } from "../components/numberContainer";
 
 const GameScreen = props => {
-    const {currentGuess, setCurrentGuess} = useState() 
+    const [currentGuess, setCurrentGuess] = useState() 
     const generateRandomBetween = (min, max, userChoise) => {
         min = Math.ceil(min) // redondea el numero para arriba
         max = Math.floor(max)
