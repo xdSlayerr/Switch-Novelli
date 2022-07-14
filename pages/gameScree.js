@@ -5,11 +5,11 @@ import Card from '../components/card';
 import { NumberContainer } from "../components/numberContainer";
 
 const GameScreen = props => {
-    const {currentGuess, setCurrentGuess} = useState(generateRandomBetween(1,100, props.userOption)) 
+    const {currentGuess, setCurrentGuess} = useState() 
     const generateRandomBetween = (min, max, userChoise) => {
         min = Math.ceil(min) // redondea el numero para arriba
         max = Math.floor(max)
-        let  randomNumber = Math.floor(Math, random() * (max - min) + min)
+        let  randomNumber = Math.floor(Math.random() * (max - min) + min)
         
         
         if (randomNumber === userChoise){
@@ -21,13 +21,13 @@ const GameScreen = props => {
     }
 
     useEffect (() => {
-        generateRandomBetween(1, 100, userOption)
+        generateRandomBetween(1, 100, props.userOption)
     }, [])
 
     return(
         <View style = {styles.screen}>
             <Text>oponent:</Text>
-            <NumberContainer>{currentGuess}</NumberContainer>
+            <NumberContainer>{setCurrentGuess}</NumberContainer>
             <Card style = {styles.buttonContainer}>
                 <Button title = 'Smaller' onPress = {() => {}}/>
                 <Button title = 'Bigger' onPress = {() => {}}/>

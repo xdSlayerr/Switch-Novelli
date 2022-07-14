@@ -25,7 +25,7 @@ export default function App() {
     return (
         <View style = {styles.container}>
             <Header title = {"Guess the number"}/>
-            <StartScreen />
+            {content}
         </View>
     )
 }
