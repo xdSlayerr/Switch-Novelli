@@ -31,6 +31,7 @@ const GameScreen = props => {
             <Card style = {styles.buttonContainer}>
                 <Button title = 'Smaller' onPress = {() => {}}/>
                 <Button title = 'Bigger' onPress = {() => {}}/>
+                <Button title = 'New number' onPress = {() => {}}/>
             </Card>
         </View>
     )
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         marginTop: 20,
         width: 300,
         maxWidth: '80%'
