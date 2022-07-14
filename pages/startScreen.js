@@ -16,54 +16,53 @@ const StartScreen = () => {
          setEnteredValue(text.replace(/[^0-9]/g, ''))
     }
     const onHandlerResetInput = () => {
-      setEnteredValue('')
       setConfirmed(false)
+      setEnteredValue('')
+     
     }
     const onHandlerConfirmInput = () => {
-      const choseNumber = parseInt(enteredValue)
-      if(choseNumber === NaN || choseNumber <= 0 || choseNumber > 99) 
-        return
+      let choseNumber = parseInt(enteredValue)
+      if(choseNumber === NaN || choseNumber <= 0 || choseNumber > 99) return;
           setConfirmed(true)
           setSelectedNumber(parseInt(enteredValue))
           setEnteredValue('')
     }
-    const confirmedOutput = confirmed ? <Text>Number: {selectedNumber}</Text> : null
-/*
-    if (confirmed) {
-      confirmedOutput = (
-        <Card style = {styles.summaryContainer}>
-          <Text>
-            Your Selection:
-          </Text>
-          <numberContainer>{selectedNumber}</numberContainer>
-          <Button title = "Start!"/>
-        </Card>
-      )
-    }
-*/
+    const confirmedOutput = confirmed ? <Text> Number: {selectedNumber}</Text> : null
+
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style = {styles.screen}>
                 <Text style = {styles.title}> Game Star</Text>
-                <Card style = {styles.inputContainer}/>
-                {confirmedOutput}
-                <View style = {styles.inputContainer}>
-                  <Text>Pick a number</Text>
-                  <Input    
-                    style = {styles.input}
-                    blurOnSumbit
-                    autoCapitalize = 'none'
-                    autoCorrecct = {false}
-                    keyboardType = 'numeric'
-                    maxLength = {2}
-                    value = {enteredValue}
-                    onChangeText = {handlerInputNumber}
-                  />
-                  <View style = {styles.buttonContainer}>
-                    <Button title = 'Clean' onPress={ onHandlerResetInput }  color = {Colors.accent}/>
-                    <Button title = 'Confirm' onPress={ onHandlerConfirmInput } color = {Colors.primary}/>
-                  </View>
+                <Card style = {styles.inputContainer}>
+                  <View style = {styles.inputContainer}>
+                    <Text>Pick a number</Text>
+                    <Input    
+                      style = {styles.input}
+                      blurOnSumbit
+                      autoCapitalize = 'none'
+                      autoCorrecct = {false}
+                      keyboardType = 'numeric'
+                      maxLength = {2}
+                      value = {enteredValue}
+                      onChangeText = {handlerInputNumber}
+                    />
+                    <View style = {styles.buttonContainer}>
+                      {enteredValue.length > 0 &&(
+                        <>
+                        <Button title = 'Clean' onPress = {() => onHandlerResetInput()}  color = {Colors.accent}/>
+                        <Button title = 'Confirm' onPress = {() => onHandlerConfirmInput()} color = {Colors.primary} disabled = {enteredValue.length < 2 ? true : false}/> 
+                        </>                       
+                      )}    
+                    </View>
                 </View>
+              </Card>
+                {confirmed &&(
+                  <Card style = {styles.summaryContainer}>
+                    <Text>Selection:</Text>
+                    <numberContainer>{selectedNumber}</numberContainer>
+                    <Button title='Start!!!' onPress={ () => props.onStartGame(selectedNumber)}/>
+                  </Card>
+                )}
             </View>
         </TouchableWithoutFeedback>
     )
@@ -78,7 +77,8 @@ const styles = StyleSheet.create ({
   },
   title: {
     fontSize: 20,
-    marginVertical: 10
+    marginVertical: 10,
+    fontFamily: 'Koulen'
   },
   inputContainer: {
     width: 300,
@@ -92,7 +92,15 @@ const styles = StyleSheet.create ({
     width: '100%',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
-  }
+  },
+summaryContainer: {
+  marginTop: 20,
+  alignItems: 'center',
+  justifyContent: 'space-evenly',
+  width: '60%',
+  height: '30%' 
+}
+
 })
 
 export default StartScreen
