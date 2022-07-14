@@ -86,6 +86,11 @@ const styles = StyleSheet.create ({
     borderColor: 'black',
     alignItems: 'center',
   },
+  input: {
+    width: '20%',
+    textAlign: 'center',
+    fontSize: 20,
+  },
   buttonContainer: {
     flexDirection: 'row',
     width: '100%',

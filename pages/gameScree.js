@@ -27,7 +27,7 @@ const GameScreen = props => {
     return(
         <View style = {styles.screen}>
             <Text>oponent:</Text>
-            <NumberContainer>{setCurrentGuess}</NumberContainer>
+            <NumberContainer>{currentGuess}</NumberContainer>
             <Card style = {styles.buttonContainer}>
                 <Button title = 'Smaller' onPress = {() => {}}/>
                 <Button title = 'Bigger' onPress = {() => {}}/>
