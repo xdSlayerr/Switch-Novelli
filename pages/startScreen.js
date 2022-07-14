@@ -5,13 +5,14 @@ import Card from '../components/card';
 import Colors from '../constants/colors'
 import Input from '../components/input'
 import {Keyboard} from 'react-native';
-import numberContainer from '../components/numberContainer';
+import  { NumberContainer } from '../components/numberContainer';
 
-const StartScreen = () => {
+const StartScreen = props => {
 
     const [enteredValue, setEnteredValue] = useState ('');
     const [confirmed, setConfirmed] = useState(false);
     const [selectedNumber, setSelectedNumber] = useState ('');
+    
     const handlerInputNumber = text =>{
          setEnteredValue(text.replace(/[^0-9]/g, ''))
     }
@@ -20,27 +21,26 @@ const StartScreen = () => {
       setEnteredValue('')
      
     }
-    const onHandlerConfirmInput = () => {
+    const handlerConfirmInput = () => {
       let choseNumber = parseInt(enteredValue)
-      if(choseNumber === NaN || choseNumber <= 0 || choseNumber > 99) return;
-          setConfirmed(true)
-          setSelectedNumber(parseInt(enteredValue))
-          setEnteredValue('')
-    }
-    const confirmedOutput = confirmed ? <Text> Number: {selectedNumber}</Text> : null
+      if(choseNumber === NaN || choseNumber < 0 || choseNumber > 99 || choseNumber.length < 1) return;
+        setConfirmed(true);
+        setSelectedNumber(parseInt(enteredValue))
+        setEnteredValue('')
+  }
+   //const confirmedOutput = confirmed ? <Text> Number: {selectedNumber}</Text> : null
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style = {styles.screen}>
-                <Text style = {styles.title}> Game Star</Text>
+                <Text style = {styles.title}> Game Start</Text>
                 <Card style = {styles.inputContainer}>
-                  <View style = {styles.inputContainer}>
                     <Text>Pick a number</Text>
                     <Input    
                       style = {styles.input}
                       blurOnSumbit
                       autoCapitalize = 'none'
-                      autoCorrecct = {false}
+                      autoCorrect = {false}
                       keyboardType = 'numeric'
                       maxLength = {2}
                       value = {enteredValue}
@@ -50,17 +50,16 @@ const StartScreen = () => {
                       {enteredValue.length > 0 &&(
                         <>
                         <Button title = 'Clean' onPress = {() => onHandlerResetInput()}  color = {Colors.accent}/>
-                        <Button title = 'Confirm' onPress = {() => onHandlerConfirmInput()} color = {Colors.primary} disabled = {enteredValue.length < 2 ? true : false}/> 
+                        <Button title = 'Confirm' onPress = {() => handlerConfirmInput()} color = {Colors.primary} disabled = {enteredValue.length < 2 ? true : false}/> 
                         </>                       
                       )}    
                     </View>
-                </View>
               </Card>
                 {confirmed &&(
                   <Card style = {styles.summaryContainer}>
                     <Text>Selection:</Text>
-                    <numberContainer>{selectedNumber}</numberContainer>
-                    <Button title='Start!!!' onPress={ () => props.onStartGame(selectedNumber)}/>
+                    <NumberContainer>{selectedNumber}</NumberContainer>
+                    <Button title='Start!!!' onPress={() => props.onStartGame(selectedNumber)}/>
                   </Card>
                 )}
             </View>
@@ -98,9 +97,9 @@ summaryContainer: {
   alignItems: 'center',
   justifyContent: 'space-evenly',
   width: '60%',
-  height: '30%' 
+  height: '30%',
 }
 
 })
 
-export default StartScreen
+export default StartScreen 

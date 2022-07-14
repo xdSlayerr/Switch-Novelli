@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-import Card from "../components/card";
-import numberContainer from "../components/numberContainer";
+import Card from '../components/card';
+import { NumberContainer } from "../components/numberContainer";
 
 const GameScreen = props => {
     const {currentGuess, setCurrentGuess} = useState(generateRandomBetween(1,100, props.userOption)) 
@@ -16,24 +16,23 @@ const GameScreen = props => {
             return generateRandomBetween(min, max, userChoise)
         }
         else{
-            return randomNumber
+            return setCurrentGuess(randomNumber)
         }
     }
 
     useEffect (() => {
         generateRandomBetween(1, 100, userOption)
-    })
+    }, [])
 
     return(
         <View style = {styles.screen}>
             <Text>oponent:</Text>
-                <numberContainer>{currentGuess}</numberContainer>
-                <Card style = {styles.buttonContainer}>
-                    <Button title = 'Smaller' onPress = {() => {}}/>
-                    <Button title = 'Bigger' onPress = {() => {}}/>
-                </Card>
+            <NumberContainer>{currentGuess}</NumberContainer>
+            <Card style = {styles.buttonContainer}>
+                <Button title = 'Smaller' onPress = {() => {}}/>
+                <Button title = 'Bigger' onPress = {() => {}}/>
+            </Card>
         </View>
-            
     )
 }
 
