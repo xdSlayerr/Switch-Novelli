@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Button, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableWithoutFeedback, View, useWindowDimensions } from 'react-native';
 import React, {useState} from 'react';
 
 import Card from '../components/card';
@@ -6,8 +6,11 @@ import Colors from '../constants/colors'
 import Input from '../components/input'
 import {Keyboard} from 'react-native';
 import  { NumberContainer } from '../components/numberContainer';
+import { ScrollView } from 'react-native';
 
 const StartScreen = props => {
+
+    const { width, height } = useWindowDimensions();
 
     const [enteredValue, setEnteredValue] = useState ('');
     const [confirmed, setConfirmed] = useState(false);
@@ -27,14 +30,19 @@ const StartScreen = props => {
         setConfirmed(true);
         setSelectedNumber(parseInt(enteredValue))
         setEnteredValue('')
-  }
+    }  
    //const confirmedOutput = confirmed ? <Text> Number: {selectedNumber}</Text> : null
 
     return (
+      <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height' }
+      style = {styles.container}
+      >
+        <ScrollView>     
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style = {styles.screen}>
                 <Text style = {styles.title}> Game Start</Text>
-                <Card style = {styles.inputContainer}>
+                <Card style = {{...styles.inputContainer, width: width * 0.8 }}>
                     <Text>Pick a number</Text>
                     <Input    
                       style = {styles.input}
@@ -49,7 +57,7 @@ const StartScreen = props => {
                     <View style = {styles.buttonContainer}>
                       {enteredValue.length > 0 &&(
                         <>
-                        <Button title = 'Clean' onPress = {() => onHandlerResetInput()}  color = {Colors.accent}/>
+                        <Button title = 'Clean' onPress = {() => onHandlerResetInput()}  color = {Colors.accent} style={{width: width *0.4}}/>
                         <Button title = 'Confirm' onPress = {() => handlerConfirmInput()} color = {Colors.primary} disabled = {enteredValue.length < 2 ? true : false}/> 
                         </>                       
                       )}    
@@ -64,6 +72,8 @@ const StartScreen = props => {
                 )}
             </View>
         </TouchableWithoutFeedback>
+        </ScrollView>
+      </KeyboardAvoidingView>
     )
     
 }
@@ -72,7 +82,8 @@ const styles = StyleSheet.create ({
   screen: {
     flex: 1,
     padding: 10, 
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#2C2C54'
   },
   title: {
     fontSize: 20,
@@ -80,11 +91,9 @@ const styles = StyleSheet.create ({
     fontFamily: 'Koulen'
   },
   inputContainer: {
-    width: 300,
-    maxWidth: '80%',
-    borderWidth: 1,
-    borderColor: 'black',
+    padding: 20,
     alignItems: 'center',
+    justifyContent: 'space-around',
   },
   input: {
     width: '20%',
@@ -102,7 +111,7 @@ summaryContainer: {
   alignItems: 'center',
   justifyContent: 'space-evenly',
   width: '60%',
-  height: '30%',
+  height: '41%',
 }
 
 })
